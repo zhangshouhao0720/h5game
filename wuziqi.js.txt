@@ -1,0 +1,60 @@
+```js
+var board = document.getElementById('board');
+var cells = [];
+var currentPlayer = 'black';
+
+// 创建棋盘
+function createBoard() {
+    for (var i = 0; i < 15; i++) {
+        var row = board.insertRow(i);
+        cells[i] = [];
+        for (var j = 0; j < 15; j++) {
+            var cell = row.insertCell(j);
+            cell.onclick = function () {
+                if (this.className === '') {
+                    this.className = currentPlayer;
+                    this.innerHTML = <div class="${currentPlayer}"></div>;
+                    checkWin();
+                    currentPlayer = currentPlayer === 'black' ? 'white' : 'black';
+                }
+            };
+            cells[i][j] = cell;
+        }
+    }
+}
+
+// 检查胜利条件
+function checkWin() {
+    var count = 0;
+    for (var i = 0; i < 15; i++) {
+        for (var j = 0; j < 15; j++) {
+            if (cells[i][j].className === currentPlayer) {
+                count++;
+                if (count >= 5 && checkLine(i, j)) {
+                    showResult(${currentPlayer}赢了！);
+                    return;
+                }
+            } else {
+                count = 0;
+            }
+        }
+        count = 0;
+    }
+    for (var j = 0; j < 15; j++) {
+        for (var i = 0; i < 15; i++) {
+            if (cells[i][j].className === currentPlayer) {
+                count++;
+                if (count >= 5 && checkLine(i, j)) {
+                    showResult(${currentPlayer}赢了！);
+                    return;
+                }
+            } else {
+                count = 0;
+            }
+        }
+        count = 0;
+    }
+    for (var i = 0; i < 11; i++) {
+        for (var j = 0; j < 11; j++) {
+            if (cells[i][j].className === currentPlayer &&
+                cells[i + 
